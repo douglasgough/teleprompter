@@ -32,6 +32,8 @@ It runs in the browser on your own machine. There are no accounts and no cloud s
 | <kbd>G</kbd> | Show / hide reading guide |
 | <kbd>C</kbd> | Countdown on / off |
 | <kbd>E</kbd> | Edit mode (<kbd>Esc</kbd> to leave) |
+| <kbd>⌘</kbd>/<kbd>Ctrl</kbd> + <kbd>Enter</kbd> | Save the paragraph you're editing (clicking elsewhere also saves) |
+| <kbd>Esc</kbd> while editing a paragraph | Discard changes to that paragraph |
 | <kbd>F</kbd> | Fullscreen |
 | <kbd>R</kbd> or <kbd>Home</kbd> | Back to the start |
 
