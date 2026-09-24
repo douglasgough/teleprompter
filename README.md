@@ -1,59 +1,108 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Prompter
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A simple, self-hosted teleprompter for recording videos. Write your script in Notion (or any Markdown editor), export it as a `.md` file, drop it into Prompter, and read it to camera.
 
-## About Laravel
+It runs in the browser on your own machine. There are no accounts and no cloud service.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Features
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- **Markdown import.** Drag `.md` files onto the page or use the Import button. The first `# Heading` becomes the script's title and isn't shown on the prompter. If you re-import a file with the same title, it replaces the old version, so you can keep editing in Notion.
+- **Smooth scrolling.** Adjustable speed that stays smooth even when very slow.
+- **Reading guide.** A highlighted band about a third of the way down the screen, near where a camera usually sits, so your eyes stay close to the lens.
+- **Adjustable text.** Font size and column width, so you can keep the text narrow and close to the camera.
+- **Mirror mode** for beam-splitter glass teleprompter rigs.
+- **3-2-1 countdown** before starting from the top.
+- **Progress bar and time remaining.**
+- **Inline editing.** Pause, press <kbd>E</kbd>, click a paragraph and fix a typo in place.
+- **Remembers your settings.** Speed, size, width, mirror, guide and countdown are saved in your browser.
+- **Keeps the screen awake** while scrolling, in browsers that support it.
+- **Works with a presentation clicker.** Most clickers send Page Up / Page Down, which move the script back and forward.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Keyboard shortcuts
 
-## Learning Laravel
+| Key | Action |
+| --- | --- |
+| <kbd>Space</kbd> | Play / pause (clicking the text does the same) |
+| <kbd>↑</kbd> <kbd>↓</kbd> | Faster / slower (hold <kbd>Shift</kbd> for fine steps) |
+| <kbd>←</kbd> <kbd>→</kbd> | Back / forward one line |
+| <kbd>Page Up</kbd> <kbd>Page Down</kbd> | Jump back / forward a third of a screen |
+| <kbd>+</kbd> <kbd>−</kbd> | Larger / smaller text |
+| <kbd>[</kbd> <kbd>]</kbd> | Narrower / wider column |
+| <kbd>M</kbd> | Mirror text |
+| <kbd>G</kbd> | Show / hide reading guide |
+| <kbd>C</kbd> | Countdown on / off |
+| <kbd>E</kbd> | Edit mode (<kbd>Esc</kbd> to leave) |
+| <kbd>F</kbd> | Fullscreen |
+| <kbd>R</kbd> or <kbd>Home</kbd> | Back to the start |
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+The mouse wheel or trackpad also scrolls the script, whether it's playing or paused.
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Requirements
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+- PHP 8.3 or newer, with Composer
+- Node.js and npm (to build the front-end assets)
+- SQLite (the default) or MySQL
 
-## Agentic Development
+## Installation
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
-
-```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+```sh
+git clone https://github.com/douglasgough/teleprompter.git prompter
+cd prompter
+touch database/database.sqlite
+composer run setup
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+`composer run setup` installs the PHP and JavaScript dependencies, creates `.env`, generates an app key, runs the database migrations and builds the assets.
 
-## Contributing
+Then start the app:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```sh
+composer run dev
+```
 
-## Code of Conduct
+and open the URL it prints, usually <http://localhost:8000>.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Using Laravel Herd, Valet or Lerd
 
-## Security Vulnerabilities
+If you use a local PHP environment that serves sites from a folder, link the project as a site and open it at its local domain (for example `https://prompter.test`). Set `APP_URL` in `.env` to match. After changing front-end code, run `npm run build`, or keep `npm run dev` running.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Using MySQL instead of SQLite
+
+Update the `DB_*` values in `.env`, create the database, and run:
+
+```sh
+php artisan migrate
+```
+
+## Workflow
+
+1. Write the script in Notion. Use `# Title` for the title and `## Headings` for section markers; headings show on the prompter as small amber labels, not as lines to read.
+2. In Notion, choose **••• → Export → Markdown & CSV**. Notion downloads a `.zip`, so unzip it to get the `.md` file.
+3. Drag the `.md` file onto Prompter's scripts page.
+4. Click **Prompt**, press <kbd>F</kbd> for fullscreen, adjust speed and size, and press <kbd>Space</kbd>.
+
+Formatting carries through: **bold** text shows in amber and *italics* in blue, which is handy for marking emphasis. Images are hidden.
+
+### About editing
+
+Inline editing changes the copy stored in Prompter, not the file in Notion. **Re-importing the script from Notion replaces any edits made in Prompter**, so make the same fixes in Notion if you plan to re-export.
+
+The editor works one paragraph at a time: paragraphs are split on blank lines. Clearing a paragraph deletes it, and adding a blank line splits it in two.
+
+## Built with
+
+- [Laravel](https://laravel.com) 13
+- [Livewire](https://livewire.laravel.com) 4 and [Alpine.js](https://alpinejs.dev)
+- [Tailwind CSS](https://tailwindcss.com) 4
+
+Laravel is more than a teleprompter needs, but it makes storing, importing and editing scripts easy.
+
+## Running the tests
+
+```sh
+php artisan test
+```
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-# teleprompter
+Prompter is open-source software licensed under the [MIT license](LICENSE).

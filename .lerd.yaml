@@ -1,0 +1,5 @@
+secured: true
+services:
+  - mysql
+workers:
+  - vite

@@ -1,0 +1,72 @@
+@import 'tailwindcss';
+
+@source '../../storage/framework/views/*.php';
+
+@theme {
+    --font-sans: ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+        'Noto Color Emoji';
+}
+
+/*
+ * Script text inside the prompter. Sizes are in `em` so the whole script
+ * scales from the font-size set on the container.
+ */
+.prompter-script {
+    line-height: 1.35;
+    font-weight: 600;
+}
+
+.prompter-script > * + *,
+.prompter-block > * + * {
+    margin-top: 0.9em;
+}
+
+.prompter-script :is(h1, h2, h3, h4, h5, h6) {
+    font-size: 0.75em;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-amber-400);
+}
+
+.prompter-script :is(ul, ol) {
+    padding-left: 1.2em;
+}
+
+.prompter-script ul {
+    list-style: disc;
+}
+
+.prompter-script ol {
+    list-style: decimal;
+}
+
+.prompter-script blockquote {
+    border-left: 0.15em solid var(--color-neutral-600);
+    padding-left: 0.6em;
+    color: var(--color-neutral-400);
+}
+
+.prompter-script :is(strong, b) {
+    color: var(--color-amber-300);
+}
+
+.prompter-script em {
+    color: var(--color-sky-300);
+}
+
+.prompter-script hr {
+    border-color: var(--color-neutral-700);
+}
+
+.prompter-script img {
+    display: none;
+}
+
+.prompter-script code {
+    font-size: 0.85em;
+}
+
+[x-cloak] {
+    display: none !important;
+}
